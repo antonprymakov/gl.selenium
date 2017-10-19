@@ -1,0 +1,17 @@
+.idea
+*.class
+*.log
+*.ctxt
+.mtj.tmp/
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+hs_err_pid*
+.gradle
+gradle-app.settings
+!gradle-wrapper.jar
+.gradletasknamecache
+
