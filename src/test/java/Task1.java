@@ -6,15 +6,14 @@ import org.openqa.selenium.chrome.ChromeDriver;
 /**
  * Created by anton.prymakov on 10/19/2017.
  */
-public class GoogleTest {
+public class Task1 {
 
     @Test
     public void googleTest(){
         WebDriver driver = new ChromeDriver();
         driver.get("https://google.com");
         driver.findElement(By.id("lst-ib")).sendKeys("test");
-
-        //driver.quit();
+        driver.quit();
     }
 
 }
