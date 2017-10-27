@@ -6,6 +6,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 /**
  * Created by prymakov on 10/26/2017.
@@ -41,8 +44,8 @@ public class Task4 {
         String itemPageDiscountPriceValue = itemPageDiscountPrice.getText();
         String itemPageRegularPriceColor = itemPageRegularPrice.getCssValue("color");
         String itemPageRegularPriceStyle = itemPageRegularPrice.getCssValue("text-decoration");
-        String itemPageDiscountPriceColor = itemPageDiscountPrice.getCssValue("color");
         String itemPageDiscountPriceStyle = itemPageDiscountPrice.getCssValue("font-weight");
+        String itemPageDiscountPriceColor = itemPageDiscountPrice.getCssValue("color");
 
         Assert.assertEquals("Product name displayed on Main page differs from the one on Item Page.",
                 mainPageProductNameValue, itemPageProductNameValue);
@@ -50,22 +53,50 @@ public class Task4 {
                 mainPageRegularPriceValue, itemPageRegularPriceValue);
         Assert.assertEquals("Discount price displayed on Main page differs from the one on Item Page.",
                 mainPageDiscountPriceValue, itemPageDiscountPriceValue);
-        Assert.assertEquals("Text color of the regular price displayed on Main page differs from expected one.",
-                mainPageRegularPriceColor, "rgba(119, 119, 119, 1)");
         Assert.assertTrue("Regular price text value displayed on Main page is not strike.",
                 mainPageRegularPriceStyle.contains("line-through"));
-        Assert.assertEquals("Text color of the discount price displayed on Main page differs from expected one.",
-                mainPageDiscountPriceColor, "rgba(204, 0, 0, 1)");
-        Assert.assertEquals("Discount price text value displayed on Main page is not bold.",
-                mainPageDiscountPriceStyle, "bold");
-        Assert.assertEquals("Text color of the regular price displayed on Item page differs from expected one.",
-                itemPageRegularPriceColor, "rgba(102, 102, 102, 1)");
         Assert.assertTrue("Regular price text value displayed on Item page is not strike.",
                 itemPageRegularPriceStyle.contains("line-through"));
-        Assert.assertEquals("Text color of the discount price displayed on Item page differs from expected one.",
-                itemPageDiscountPriceColor, "rgba(204, 0, 0, 1)");
-        Assert.assertEquals("Discount price text value displayed on Item page is not bold.",
-                itemPageDiscountPriceStyle, "bold");
+        switch (((RemoteWebDriver) driver).getCapabilities().getBrowserName()) {
+            case "chrome": case "internet explorer":
+                Assert.assertEquals("Text color of the regular price displayed on Main page differs from expected one.",
+                        mainPageRegularPriceColor, "rgba(119, 119, 119, 1)");
+                Assert.assertEquals("Text color of the discount price displayed on Main page differs from expected one.",
+                        mainPageDiscountPriceColor, "rgba(204, 0, 0, 1)");
+                Assert.assertEquals("Text color of the regular price displayed on Item page differs from expected one.",
+                        itemPageRegularPriceColor, "rgba(102, 102, 102, 1)");
+                Assert.assertEquals("Text color of the discount price displayed on Item page differs from expected one.",
+                        itemPageDiscountPriceColor, "rgba(204, 0, 0, 1)");
+                switch (((RemoteWebDriver) driver).getCapabilities().getBrowserName()) {
+                    case "chrome":
+                        Assert.assertEquals("Discount price text value displayed on Main page is not bold.",
+                                mainPageDiscountPriceStyle, "bold");
+                        Assert.assertEquals("Discount price text value displayed on Item page is not bold.",
+                                itemPageDiscountPriceStyle, "bold");
+                        break;
+                    case "internet explorer":
+                        Assert.assertEquals("Discount price text value displayed on Main page is not bold.",
+                                mainPageDiscountPriceStyle, "900");
+                        Assert.assertEquals("Discount price text value displayed on Item page is not bold.",
+                                itemPageDiscountPriceStyle, "700");
+                        break;
+                }
+                break;
+            case "firefox":
+                Assert.assertEquals("Text color of the regular price displayed on Main page differs from expected one.",
+                        mainPageRegularPriceColor, "rgb(119, 119, 119)");
+                Assert.assertEquals("Text color of the discount price displayed on Main page differs from expected one.",
+                        mainPageDiscountPriceColor, "rgb(204, 0, 0)");
+                Assert.assertEquals("Discount price text value displayed on Main page is not bold.",
+                        mainPageDiscountPriceStyle, "900");
+                Assert.assertEquals("Text color of the regular price displayed on Item page differs from expected one.",
+                        itemPageRegularPriceColor, "rgb(102, 102, 102)");
+                Assert.assertEquals("Text color of the discount price displayed on Item page differs from expected one.",
+                        itemPageDiscountPriceColor, "rgb(204, 0, 0)");
+                Assert.assertEquals("Discount price text value displayed on Item page is not bold.",
+                        itemPageDiscountPriceStyle, "700");
+                break;
+        }
     }
 
     @AfterClass
