@@ -21,32 +21,28 @@ public class Task3 {
     @BeforeClass
     public static void start() {
         driver.get(url);
-        driver.findElement(By.name("username")).sendKeys(login);
-        driver.findElement(By.name("password")).sendKeys(password);
-        driver.findElement(By.name("login")).click();
+        if (isElementPresentAndVisible("#box-login")) {
+            driver.findElement(By.name("username")).sendKeys(login);
+            driver.findElement(By.name("password")).sendKeys(password);
+            driver.findElement(By.name("login")).click();
+        }
     }
 
     @Test
     public void pageHeaderIsPresent() {
         List<WebElement> itemsList = driver.findElements(By.cssSelector("#box-apps-menu > *"));
 
-        for (int i = 0; i < itemsList.size(); i++) {
-            itemsList = driver.findElements(By.cssSelector("#box-apps-menu > *"));
-            itemsList.get(i).click();
+        for (int i = 1; i < itemsList.size()+1; i++) {
+            driver.findElement(By.xpath("//*[@id='app-'] [" + (i) + "]")).click();
+            Assert.assertTrue("Header of category '" + getCurrentSelectedCategory().get(0).getText()
+                    + "' is not present on the page.", isElementPresentAndVisible("#content > h1"));
+
             List<WebElement> subItemsList = driver.findElements(By.cssSelector("li[id^=doc]"));
 
-            if (!subItemsList.isEmpty()) {
-                for (int j = 0; j < subItemsList.size(); j++) {
-                    subItemsList.get(j).click();
-                    subItemsList = driver.findElements(By.cssSelector("li[id^=doc]"));
-                    Assert.assertTrue("Header of '" + subItemsList.get(j).getText() + "' section is not present on the page.",
-                            driver.findElement(By.cssSelector("div.header")).isDisplayed());
-                }
-            }
-            else {
-                itemsList = driver.findElements(By.cssSelector("#box-apps-menu > *"));
-                Assert.assertTrue("Header of '" + itemsList.get(i).getText() + "' section is not present on the page.",
-                        driver.findElement(By.cssSelector("div.header")).isDisplayed());
+            for (int j = 1; j < subItemsList.size()+1; j++) {
+                driver.findElement(By.xpath("//li[contains(@id, 'doc-')] [" + (j) + "]")).click();
+                Assert.assertTrue("Header of subcategory '" + getCurrentSelectedCategory().get(1).getText()
+                        + "' is not present on the page.", isElementPresentAndVisible("#content > h1"));
             }
         }
     }
@@ -54,5 +50,20 @@ public class Task3 {
     @AfterClass
     public static void finish() {
         driver.quit();
+    }
+
+    private static boolean isElementPresentAndVisible (String cssSelector) {
+        try {
+            if (driver.findElement(By.cssSelector(cssSelector)).isDisplayed())
+                return true;
+            return false;
+        } catch (org.openqa.selenium.NoSuchElementException e) {
+            return false;
+        }
+    }
+
+    //returns the list of WebElements - currently selected Category (index [0]) and Subcategory (optional, index [1])
+    private List<WebElement> getCurrentSelectedCategory() {
+        return driver.findElements(By.xpath("//li[contains(@class, 'selected')]"));
     }
 }
