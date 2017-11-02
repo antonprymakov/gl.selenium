@@ -35,12 +35,10 @@ public class Task6 {
         }
 
         driver.findElement(By.xpath("//a[@class='content']")).click();
-        WebElement table = driver.findElement(By.xpath("//*[@id='checkout-summary-wrapper']"));
-        while (driver.findElements(By.xpath("//*[@id='checkout-summary-wrapper']")).size() > 0) {
-            if (isElementPresentAndVisible("//button[@name='remove_cart_item']")) {
-                driver.findElement(By.xpath("//button[@name='remove_cart_item']")).click();
-                wait.until(ExpectedConditions.stalenessOf(table));
-            }
+        while (isElementPresentAndVisible("//button[@name='remove_cart_item']")) {
+            WebElement table = driver.findElement(By.xpath("//table[@class='dataTable rounded-corners']"));
+            driver.findElement(By.xpath("//button[@name='remove_cart_item']")).click();
+            wait.until(ExpectedConditions.stalenessOf(table));
         }
         driver.get(url);
         Assert.assertEquals(0, currentQuantityInCart());
