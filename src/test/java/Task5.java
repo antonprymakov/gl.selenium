@@ -4,6 +4,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
 
@@ -37,10 +38,9 @@ public class Task5 {
         driver.findElement(By.xpath("//input[@value='1-3']")).click();
         driver.findElement(By.xpath("//input[@name='quantity']")).sendKeys("10");
         new Select(driver.findElement(By.xpath("//select[@name='sold_out_status_id']"))).selectByIndex(0);
-        //File file = new File(getClass().getClassLoader().getResource("image.png").getFile());
-        //WebElement fileField = driver.findElement(By.xpath("//input[@name='new_images[]']"));
-        //fileField.sendKeys(file.getAbsolutePath().toString());
-
+        File file = new File(getClass().getClassLoader().getResource("image.png").getFile());
+        WebElement fileField = driver.findElement(By.xpath("//input[@name='new_images[]']"));
+        fileField.sendKeys(file.getAbsolutePath().replace("%20", " "));
         driver.findElement(By.xpath("//input[@name='date_valid_from']")).sendKeys("10102017");
         driver.findElement(By.xpath("//input[@name='date_valid_to']")).sendKeys("10102018");
 
@@ -59,7 +59,7 @@ public class Task5 {
         driver.findElement(By.xpath("//input[@name='gross_prices[EUR]']")).sendKeys("12");
         driver.findElement(By.xpath("//button[@name='save']")).click();
 
-        Assert.assertTrue(isElementPresentAndVisible("//a[text()='" + productName + "']"));
+        Assert.assertTrue(driver.findElement(By.xpath("//table[@class='dataTable']")).getText().contains(productName));
     }
 
     @AfterClass
