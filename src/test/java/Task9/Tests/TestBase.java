@@ -1,6 +1,6 @@
-package Task_9.Tests;
+package Task9.Tests;
 
-import Task_9.App.Application;
+import Task9.App.Application;
 import org.junit.After;
 import org.junit.Before;
 import org.openqa.selenium.chrome.ChromeDriver;

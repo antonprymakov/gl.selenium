@@ -1,4 +1,4 @@
-package Task_9.Pages;
+package Task9.Pages;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

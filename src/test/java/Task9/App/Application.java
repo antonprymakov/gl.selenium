@@ -1,8 +1,8 @@
-package Task_9.App;
+package Task9.App;
 
-import Task_9.Pages.CheckoutPage;
-import Task_9.Pages.MainPage;
-import Task_9.Pages.ProductPage;
+import Task9.Pages.CheckoutPage;
+import Task9.Pages.MainPage;
+import Task9.Pages.ProductPage;
 import org.openqa.selenium.WebDriver;
 
 public class Application {
