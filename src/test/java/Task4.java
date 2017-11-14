@@ -14,7 +14,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
  * Created by prymakov on 10/26/2017.
  */
 public class Task4 {
-    static WebDriver driver = new ChromeDriver();
+    static WebDriver driver = new FirefoxDriver();
     static String url = "http://localhost/litecart";
 
     @BeforeClass
@@ -100,7 +100,7 @@ public class Task4 {
     }
 
     @AfterClass
-    public static void finish() {
+    public void finish() {
         driver.quit();
     }
 }

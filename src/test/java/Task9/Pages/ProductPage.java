@@ -1,46 +1,43 @@
 package Task9.Pages;
 
-import Task9.Tests;
 import org.openqa.selenium.By;
-import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import Task9.Entities.Page;
-import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 
 public class ProductPage extends Page {
-    int initialQuantityInCart = currentQuantityInCart();
+
+    public ProductPage(WebDriver driver) {
+        super(driver);
+        PageFactory.initElements(driver, this);
+    }
 
     @FindBy(name="options[Size]")
     WebElement sizeDropDown;
 
     @FindBy(name="add_cart_product")
-    WebElement addBtn;
+    WebElement addProductButton;
 
     @FindBy(xpath="//span[@class='quantity']")
-    static WebElement quantity;
+    WebElement quantity;
 
-    public ProductPage() {
-        super(driver);
-    }
-
-    public void open() {
-        MainPage.openProductPage();
-    }
-
-    public void selectSizeIfApplicable() {
-        if (sizeDropDown != null)
-            new Select(sizeDropDown).selectByIndex(1);//new Select(driver.findElement(By.xpath("//select[@name='options[Size]']"))).selectByIndex(1);
-    }
-
-    public void clickAddProductButton() {
-        addBtn.click();
-        wait.until(ExpectedConditions.textToBe(By.xpath("//span[@class='quantity']"),
+    public void addProductToCart() {
+        setSizeIfApplicable();
+        int initialQuantityInCart = currentQuantityInCart();
+        addProductButton.click();
+        wait.until(ExpectedConditions.textToBePresentInElementLocated(By.xpath("//span[@class='quantity']"),
                 String.valueOf(initialQuantityInCart + 1)));
     }
 
-    public static int currentQuantityInCart() {
-        Tests.app.open();
+    public void setSizeIfApplicable() {
+        if (isElementPresentAndVisible(sizeDropDown))
+            new Select(sizeDropDown).selectByIndex(1);
+    }
+
+    private int currentQuantityInCart() {
         return Integer.parseInt(quantity.getText());
     }
 }

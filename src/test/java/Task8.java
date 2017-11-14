@@ -25,7 +25,7 @@ public class Task8 {
     @BeforeClass
     public static void start() throws MalformedURLException {
         DesiredCapabilities caps =  new DesiredCapabilities();
-        caps.setBrowserName("firefox");
+        caps.setBrowserName("chrome");
         driver = new EventFiringWebDriver(new RemoteWebDriver(new URL("http://192.168.56.101:4444/wd/hub"), caps));
         driver.register(new MyListener());
 

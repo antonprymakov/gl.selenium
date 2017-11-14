@@ -1,23 +1,34 @@
 package Task9.Pages;
 
-import Task9.Entities.Application;
-import Task9.Tests;
-import org.openqa.selenium.By;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.WebDriver;
-import Task9.Entities.Page;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 public class MainPage extends Page {
-    @FindBy(xpath="//*[@id='box-most-popular']/div/ul/li[1]")
-    static WebElement product;
 
     public MainPage(WebDriver driver) {
         super(driver);
+        PageFactory.initElements(driver, this);
     }
 
-    public static void openProductPage() {
-        Tests.app.open();
-        driver.findElement(By.xpath("//*[@id='box-most-popular']/div/ul/li[1]/a[1]"));//product.click();
+    @FindBy(xpath="//*[@id='box-most-popular']/div/ul/li[1]")
+    WebElement firstProductInList;
+
+    @FindBy(xpath="//span[@class='quantity']")
+    WebElement quantity;
+
+    public int currentQuantityInCart() {
+        return Integer.parseInt(quantity.getText());
     }
+
+    public void openFirstProductFromList() {
+        firstProductInList.click();
+    }
+
+    public void open() {
+        driver.get(baseUrl);
+    }
+
 }
+

@@ -1,10 +1,11 @@
 import org.junit.Test;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
 
 /**
- * Created by anton.prymakov on 10/19/2017.
+ * Created by prymakov on 10/19/2017.
  */
 public class Task1 {
 
@@ -12,7 +13,6 @@ public class Task1 {
     public void googleTest(){
         WebDriver driver = new ChromeDriver();
         driver.get("https://google.com");
-        driver.findElement(By.id("lst-ib")).sendKeys("test");
         driver.quit();
     }
 
