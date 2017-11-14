@@ -1,4 +1,4 @@
-package Task9.Tests;
+package Task_9.Tests;
 
 import org.junit.Assert;
 import org.junit.Test;

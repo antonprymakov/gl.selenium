@@ -1,6 +1,5 @@
-package Task9.Pages;
+package Task_9.Pages;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -28,7 +27,7 @@ public class ProductPage extends Page {
         setSizeIfApplicable();
         int initialQuantityInCart = currentQuantityInCart();
         addProductButton.click();
-        wait.until(ExpectedConditions.textToBePresentInElementLocated(By.xpath("//span[@class='quantity']"),
+        wait.until(ExpectedConditions.textToBePresentInElement(quantity,
                 String.valueOf(initialQuantityInCart + 1)));
     }
 
